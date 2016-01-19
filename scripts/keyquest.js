@@ -6,7 +6,7 @@ define(["pixi.min", "app/pixiwindow"], function (PIXI, PIXIWindow) {
 
     KeyQuest.prototype.load = function () {
         var stage = new PIXI.Container();
-        var sprite = new PIXI.Sprite.fromImage("assets/images/keyguy.png");
+        var sprite = new PIXI.Sprite(this.game.assets.images.keyguy);
         sprite.texture.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;
         stage.addChild(sprite);
         stage.scale.x = 16; stage.scale.y = 16;

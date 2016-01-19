@@ -2,7 +2,8 @@
 //  - Update logic groups
 //  - Render game windows
 
-define(['app/messagebus','app/movements'], function (MessageBus, Movements) {
+define(['app/assets','app/messagebus','app/movements'],
+        function (Assets, MessageBus, Movements) {
     Game = function () {
         this.data = {};
         this.physicsworlds = {};
@@ -31,9 +32,28 @@ define(['app/messagebus','app/movements'], function (MessageBus, Movements) {
         window.onkeydown = this.onKeyDown.bind(this);
         window.onkeyup = this.onKeyUp.bind(this);
 
+        this.assets = new Assets(this._start.bind(this));
+    };
+
+    Game.prototype._start = function () {
+        if (this._readyCallbacks) {
+            for (var i = 0; i < this._readyCallbacks.length; ++i) {
+                this._readyCallbacks[i]();
+            }
+        }
+
+
         // ALL ABOARD
         this.render();
         this.update();
+    }
+
+    Game.prototype.ready = function (callback) {
+        if (!this._readyCallbacks) this._readyCallbacks = [];
+
+        this._readyCallbacks.push(callback);
+
+        return this;
     };
 
     Game.prototype.render = function () {

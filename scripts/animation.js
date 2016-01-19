@@ -20,5 +20,9 @@ define(function () {
 
     };
 
+    Animation.prototype.play = function (game, groupname) {
+
+    };
+
     return Animation;
 });

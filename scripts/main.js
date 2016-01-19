@@ -19,7 +19,7 @@ function start(Game, Config) {
     document.body.innerHTML = "";
     var game = new Game();
     var config = new Config(game);
-    game.load(config);
+    game.ready(function () { game.load(config); });
 }
 
 require(['jquery','app/game','app/keyquest'], function ($, Game, Config) {

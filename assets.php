@@ -1,6 +1,6 @@
 <?php
 
-$rii = new RecursiveIteratorIterator(new RecursiveDirectoryIterator("../assets"));
+$rii = new RecursiveIteratorIterator(new RecursiveDirectoryIterator("assets"));
 
 $paths = array();
 
