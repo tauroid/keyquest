@@ -3,9 +3,18 @@ define(["jquery", "pixi.min"], function ($, PIXI) {
         $.ajax("assets.php").done((function (assetstring) {
             var assetarray = eval(assetstring);
             for (var i = 0; i < assetarray.length; ++i) {
-                this.addAsset(this.getIDFromRelativeURL(assetarray[i]), assetarray[i]);
+                PIXI.loader.add(assetarray[i]);
             }
-        }).bind(this), callback);
+
+            PIXI.loader.load((function () {
+                for (var i = 0; i < assetarray.length; ++i) {
+                    this.addAsset(this.getIDFromRelativeURL(assetarray[i]),
+                                                            assetarray[i]);
+                }
+
+                callback();
+            }).bind(this));
+        }).bind(this));
     };
 
     Assets.prototype.addAsset = function (id, url) {
@@ -14,7 +23,8 @@ define(["jquery", "pixi.min"], function ($, PIXI) {
 
         switch (idarray[0]) {
             case "images":
-                asset = new PIXI.Texture.fromImage(url);
+                asset = PIXI.Texture.fromImage(url);
+                asset.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;
                 break;
             default:
                 break;

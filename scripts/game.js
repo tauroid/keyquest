@@ -116,18 +116,18 @@ define(['app/assets','app/messagebus','app/movements'],
     };
 
     Game.prototype.activateGroup = function (name) {
-        this.groupnames.push(name);
+        if (this.groupnames.indexOf(name) == -1) this.groupnames.push(name);
     };
 
-    Game.prototype.deleteGroup = function (key) {
-        var i = this.groupnames.indexOf(key);
+    Game.prototype.deleteGroup = function (name) {
+        var i = this.groupnames.indexOf(name);
         if (i != -1) this.groupnames.splice(i,1);
 
-        delete this.physicsworlds[key];
-        delete this.physicsbinders[key];
-        delete this.logicgroups[key];
-        delete this.gamewindows[key];
-        delete this.localmessagebusses[key];
+        delete this.physicsworlds[name];
+        delete this.physicsbinders[name];
+        delete this.logicgroups[name];
+        delete this.gamewindows[name];
+        delete this.localmessagebusses[name];
     };
 
     Game.prototype.onResize = function () {
