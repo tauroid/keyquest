@@ -29,6 +29,8 @@ define(['app/assets','app/messagebus','app/movements'],
 
         window.onresize = this.onResize.bind(this);
 
+        window.onclick = this.onClick.bind(this);
+        window.onmousemove = this.onMouseMove.bind(this);
         window.onkeydown = this.onKeyDown.bind(this);
         window.onkeyup = this.onKeyUp.bind(this);
 
@@ -132,9 +134,21 @@ define(['app/assets','app/messagebus','app/movements'],
 
     Game.prototype.onResize = function () {
         for (var i = 0; i < this.groupnames.length; ++i) {
-            var gw = this.gamewindows[this.groupnames[i]];
-            if (gw != undefined) gw.resize(window.innerWidth, window.innerHeight);
+            var gws = this.gamewindows[this.groupnames[i]];
+            if (gws != undefined) {
+                for (var gw = 0; gw < gws.length; ++gw) {
+                    gws[gw].resize(window.innerWidth, window.innerHeight);
+                }
+            }
         }
+    };
+
+    Game.prototype.onClick = function (mouseevent) {
+        this.messagebus.sendMessage("click", mouseevent);
+    };
+
+    Game.prototype.onMouseMove = function (mouseevent) {
+        this.messagebus.sendMessage("mousemove", mouseevent);
     };
 
     Game.prototype.onKeyDown = function (keyevent) {

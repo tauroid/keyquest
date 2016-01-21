@@ -24,5 +24,9 @@ define(["pixi.min"], function (PIXI) {
         this.renderer.render(this.stage, this.matrix);
     };
 
+    PIXIWindow.prototype.resize = function (width, height) {
+        this.renderer.resize(width, height, true);
+    };
+
     return PIXIWindow;
 });

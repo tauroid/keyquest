@@ -1,4 +1,4 @@
-define(["jquery", "pixi.min"], function ($, PIXI) {
+define(["jquery", "pixi.min", "howler.min"], function ($, PIXI, H) {
     Assets = function(callback) {
         $.ajax("assets.php").done((function (assetstring) {
             var assetarray = eval(assetstring);
@@ -25,6 +25,12 @@ define(["jquery", "pixi.min"], function ($, PIXI) {
             case "images":
                 asset = PIXI.Texture.fromImage(url);
                 asset.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;
+                break;
+            case "audio":
+                console.log(url);
+                asset = new H.Howl({ urls: [url], sprite: { buh: [1600, 2500] } });
+                asset.play('buh');
+                console.log(asset);
                 break;
             default:
                 break;

@@ -1,5 +1,5 @@
-define(["pixi.min", "app/pixiwindow", "app/animation"],
-        function (PIXI, PIXIWindow, Animation) {
+define(["pixi.min", "app/pixiwindow", "app/animation", "app/controller"],
+        function (PIXI, PIXIWindow, Animation, Controller) {
     KeyQuest = function (game) {
         this.name = "keyquest";
         this.game = game;
@@ -26,6 +26,10 @@ define(["pixi.min", "app/pixiwindow", "app/animation"],
         this.game.gamewindows[this.name].push(gamewindow);
 
         this.game.activateGroup(this.name);
+
+        var controller = new Controller();
+        controller.attach(this.game);
+        controller.noise = this.game.assets.audio.bap;
     };
 
     KeyQuest.prototype.unload = function () {
