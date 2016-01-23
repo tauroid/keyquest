@@ -6,8 +6,6 @@ define(['app/assets','app/messagebus','app/movements'],
         function (Assets, MessageBus, Movements) {
     Game = function () {
         this.data = {};
-        this.physicsworlds = {};
-        this.physicsbinders = {};
         this.logicgroups = {};
         this.gamewindows = {};
         this.messagebus = new MessageBus();
@@ -20,7 +18,7 @@ define(['app/assets','app/messagebus','app/movements'],
 
         this.movements = new Movements(this);
 
-        this.updateTimestep = 20;
+        this.updateTimestep = 30;
 
         this.velIterations = 10;
         this.posIterations = 3;
@@ -75,20 +73,6 @@ define(['app/assets','app/messagebus','app/movements'],
         var newtime = new Date().getTime();
         var delta = newtime - this.lastUpdateTime;
         this.lastUpdateTime = newtime;
-
-        for (var i = 0; i < this.groupnames.length; ++i) {
-            var physicsworld = this.physicsworlds[this.groupnames[i]];
-            if (physicsworld !== undefined) {
-                physicsworld.Step(delta/1000, this.velIterations, this.posIterations);
-            }
-        }
-
-        for (var i = 0; i < this.groupnames.length; ++i) {
-            var physicsbinder = this.physicsbinders[this.groupnames[i]];
-            if (physicsbinder !== undefined) {
-                physicsbinder.syncActors();
-            }
-        }
 
         for (var i = 0; i < this.groupnames.length; ++i) {
             var logicgroup = this.logicgroups[this.groupnames[i]];
